@@ -9,7 +9,7 @@ library(emmeans)
 library(lmerTest)
 library(simr)
 
-icc = function(model){
+icc_fun = function(model){
   #### compute ICC
   var.components = as.data.frame(VarCorr(model))$vcov
   ICC = var.components[1]/sum(var.components)
@@ -95,7 +95,7 @@ for (row in seq(1:1000)){
     filter(time==3) %>%
     dplyr::select(p.value) %>% as.numeric
   
-  ICC = icc(lmer(y ~ (1 | subject), data=df))[[1]]
+  ICC = icc_fun(lmer(y ~ (1 | subject), data=df))[[1]]
   
   results[row,'p'] = p
   results[row,'ICC'] = ICC
